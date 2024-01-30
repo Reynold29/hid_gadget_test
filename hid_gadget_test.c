@@ -18,14 +18,16 @@ struct options {
 };
 
 static struct options kmod[] = {
-	{.opt = "--left-ctrl",		.val = 0x01},
-	{.opt = "--right-ctrl",		.val = 0x10},
-	{.opt = "--left-shift",		.val = 0x02},
-	{.opt = "--right-shift",	.val = 0x20},
-	{.opt = "--left-alt",		.val = 0x04},
-	{.opt = "--right-alt",		.val = 0x40},
-	{.opt = "--left-meta",		.val = 0x08},
-	{.opt = "--right-meta",		.val = 0x80},
+	{.opt = "1",		.val = 0x1e},
+	{.opt = "2",		.val = 0x1f},
+	{.opt = "3",		.val = 0x20},
+	{.opt = "4",		.val = 0x21},
+	{.opt = "5",		.val = 0x22},
+	{.opt = "6",		.val = 0x23},
+	{.opt = "7",		.val = 0x24},
+	{.opt = "8",		.val = 0x25},
+	{.opt = "9",		.val = 0x26},
+	{.opt = "0",		.val = 0x27},
 	{.opt = NULL}
 };
 
@@ -206,38 +208,6 @@ int joystick_fill_report(char report[8], char buf[BUF_LEN], int *hold)
 	return 4;
 }
 
-void print_options(char c)
-{
-	int i = 0;
-
-	if (c == 'k') {
-		printf("	keyboard options:\n"
-		       "		--hold\n");
-		for (i = 0; kmod[i].opt != NULL; i++)
-			printf("\t\t%s\n", kmod[i].opt);
-		printf("\n	keyboard values:\n"
-		       "		[a-z] or\n");
-		for (i = 0; kval[i].opt != NULL; i++)
-			printf("\t\t%-8s%s", kval[i].opt, i % 2 ? "\n" : "");
-		printf("\n");
-	} else if (c == 'm') {
-		printf("	mouse options:\n"
-		       "		--hold\n");
-		for (i = 0; mmod[i].opt != NULL; i++)
-			printf("\t\t%s\n", mmod[i].opt);
-		printf("\n	mouse values:\n"
-		       "		Two signed numbers\n"
-		       "--quit to close\n");
-	} else {
-		printf("	joystick options:\n");
-		for (i = 0; jmod[i].opt != NULL; i++)
-			printf("\t\t%s\n", jmod[i].opt);
-		printf("\n	joystick values:\n"
-		       "		three signed numbers\n"
-		       "--quit to close\n");
-	}
-}
-
 int main(int argc, const char *argv[])
 {
 	const char *filename = NULL;
@@ -265,8 +235,6 @@ int main(int argc, const char *argv[])
 		perror(filename);
 		return 3;
 	}
-
-	print_options(argv[2][0]);
 
 	while (42) {
 
